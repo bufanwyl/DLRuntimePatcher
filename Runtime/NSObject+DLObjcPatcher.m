@@ -71,9 +71,9 @@
 	Method origMethod = class_getInstanceMethod([self class], selector);
 	IMP impl = class_getMethodImplementation([self class], selector);
 	BOOL result = class_addMethod([self class],
-					NSSelectorFromString([NSStringFromSelector(selector) stringByAppendingString:@"__"]),
-					impl,
-					method_getTypeEncoding(origMethod));
+								  [NSObject pathchedSelector:selector],
+								  impl,
+								  method_getTypeEncoding(origMethod));
 	NSAssert(result, @"Unable to add method");
 	
 	method_setImplementation(origMethod,
@@ -85,9 +85,13 @@
     Method *methods = class_copyMethodList(self, &outCount);
     for (int i = 0; i < outCount; i++) {
 		SEL sel = method_getName(methods[i]);
-//@TODO: we don't need exactly all methods here (f.e. starting with dot)
+		if (sel_isEqual(sel, NSSelectorFromString(@"retain")) ||
+			sel_isEqual(sel, NSSelectorFromString(@"release"))) {
+			continue;
+			//@TODO: we don't need exactly all methods here (f.e. starting with dot)
+		}
 		[self complementInstanceMethod:sel byCalling:^{
-			//TODO: maybe we should 
+			//TODO: maybe we should add more interesting info here (passed args)
 			block(sel);
 		}];
 	}
@@ -101,7 +105,7 @@
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
 	 
-	SEL modifiedSelector = NSSelectorFromString([NSStringFromSelector(anInvocation.selector) stringByAppendingString:@"__"]); //TODO: more universal selector needed
+	SEL modifiedSelector = [NSObject pathchedSelector:anInvocation.selector];
 	if ([self respondsToSelector:modifiedSelector]) {
 		DLVoidBlock block = [[Interceptor sharedInstance] blockForClass:[[anInvocation target] class]
 																 method:anInvocation.selector];
@@ -112,5 +116,15 @@
 }
 
 #pragma clang diagnostic pop
+
+#pragma mark - Private
+
++ (SEL)pathchedSelector:(SEL)selector {
+	NSString *strSelector = NSStringFromSelector(selector);
+	if ([[strSelector substringFromIndex:strSelector.length - 1] isEqualToString:@":"]) {
+		return NSSelectorFromString([NSString stringWithFormat:@"%@__:", [strSelector  substringToIndex:strSelector.length - 1]]);
+	}
+	return NSSelectorFromString([strSelector stringByAppendingString:@"__"]);
+}
 
 @end
