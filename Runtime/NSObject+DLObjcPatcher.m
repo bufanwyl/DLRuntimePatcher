@@ -66,7 +66,7 @@
 
 @implementation NSObject (DLObjcPatcher)
 
-+ (void)complementMethod:(SEL)selector byCalling:(DLVoidBlock)block {
++ (void)complementInstanceMethod:(SEL)selector byCalling:(DLVoidBlock)block {
 	[[Interceptor sharedInstance] storeBlock:block forClass:self method:selector];
 	Method origMethod = class_getInstanceMethod([self class], selector);
 	IMP impl = class_getMethodImplementation([self class], selector);
@@ -79,6 +79,21 @@
 	method_setImplementation(origMethod,
 							 class_getMethodImplementation([self class], @selector(fakeSelector)));	
 }
+
++ (void)listenToAllInstanceMethods:(DLSelectorBlock)block {
+	unsigned int outCount;
+    Method *methods = class_copyMethodList(self, &outCount);
+    for (int i = 0; i < outCount; i++) {
+		SEL sel = method_getName(methods[i]);
+//@TODO: we don't need exactly all methods here (f.e. starting with dot)
+		[self complementInstanceMethod:sel byCalling:^{
+			block(sel);
+		}];
+	}
+    free(methods);
+}
+
+#pragma mark - Override
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
@@ -96,4 +111,8 @@
 }
 
 #pragma clang diagnostic pop
+
+#pragma mark - Private
+
+
 @end

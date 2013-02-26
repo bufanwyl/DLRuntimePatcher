@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^DLVoidBlock)(void);
+typedef void (^DLSelectorBlock)(SEL selector);
 
 @interface NSObject (DLObjcPatcher)
 
-+ (void)complementMethod:(SEL)selector byCalling:(DLVoidBlock)block;
++ (void)complementInstanceMethod:(SEL)selector byCalling:(DLVoidBlock)block;
++ (void)listenToAllInstanceMethods:(DLSelectorBlock)block;
 
 @end

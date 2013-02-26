@@ -44,7 +44,7 @@
 	TestA * a = [[TestA alloc] init];
 	//[a replaceMethod:@selector(foo) withBlock:^ { NSLog(@"%@", @"custom foo"); }];
 	//[a replaceMethod:@selector(bar) withBlock:^ { NSLog(@"%@", @"custom bar"); }];
-	[TestA complementMethod:@selector(foo) byCalling:^{
+	[TestA complementInstanceMethod:@selector(foo) byCalling:^{
 		NSLog(@"Imtercepted %@", NSStringFromSelector(@selector(foo)));
 	}];
 	
