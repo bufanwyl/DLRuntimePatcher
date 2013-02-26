@@ -87,6 +87,7 @@
 		SEL sel = method_getName(methods[i]);
 //@TODO: we don't need exactly all methods here (f.e. starting with dot)
 		[self complementInstanceMethod:sel byCalling:^{
+			//TODO: maybe we should 
 			block(sel);
 		}];
 	}
@@ -100,19 +101,16 @@
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
 	 
-	SEL modifiedSelector = NSSelectorFromString([NSStringFromSelector(anInvocation.selector) stringByAppendingString:@"__"]);
+	SEL modifiedSelector = NSSelectorFromString([NSStringFromSelector(anInvocation.selector) stringByAppendingString:@"__"]); //TODO: more universal selector needed
 	if ([self respondsToSelector:modifiedSelector]) {
 		DLVoidBlock block = [[Interceptor sharedInstance] blockForClass:[[anInvocation target] class]
 																 method:anInvocation.selector];
-		block();
+		block(); //@TODO: pass some args here, f.e.
 		anInvocation.selector = modifiedSelector;
 		[anInvocation invokeWithTarget:self];
 	}
 }
 
 #pragma clang diagnostic pop
-
-#pragma mark - Private
-
 
 @end
