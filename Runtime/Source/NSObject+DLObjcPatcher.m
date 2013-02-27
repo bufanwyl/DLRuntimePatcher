@@ -13,12 +13,16 @@
 
 @interface Interceptor : NSObject
 
-@property (nonatomic, strong) NSMutableDictionary *blocksStore;
+@property (nonatomic, strong) NSMutableDictionary *classBlocksStore;
+@property (nonatomic, strong) NSMutableDictionary *instanceBlocksStore;
 
 + (instancetype)sharedInstance;
 
 - (void)storeBlock:(DLRetBlock)block forClass:(Class)aClass method:(SEL)method;
+- (void)storeBlock:(DLRetBlock)block forInstance:(id)instance method:(SEL)method;
+
 - (DLRetBlock)blockForClass:(Class)aClass method:(SEL)method;
+- (DLRetBlock)blockForInstance:(id)instance method:(SEL)method;
 
 @end
 
@@ -35,25 +39,39 @@
 }
 
 - (void)storeBlock:(DLRetBlock)block forClass:(Class)aClass method:(SEL)method {
-	if (!_blocksStore) {
-		_blocksStore = [NSMutableDictionary dictionary];
+	if (!_classBlocksStore) {
+		_classBlocksStore = [NSMutableDictionary dictionary];
 	}
-	if (!_blocksStore[NSStringFromClass(aClass)]) {
-		_blocksStore[NSStringFromClass(aClass)] = [NSMutableDictionary dictionary];
+	if (!_classBlocksStore[NSStringFromClass(aClass)]) {
+		_classBlocksStore[NSStringFromClass(aClass)] = [NSMutableDictionary dictionary];
 	}
-	self.blocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)] = [block copy];
+	self.classBlocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)] = [block copy];
+}
+
+- (void)storeBlock:(DLRetBlock)block forInstance:(id)instance method:(SEL)method {
+	NSInteger addr = (NSInteger)instance;
+	if (!_instanceBlocksStore) {
+		_instanceBlocksStore = [NSMutableDictionary dictionary];
+	}
+	if (!_instanceBlocksStore[@(addr)]) {
+		_instanceBlocksStore[@(addr)] = [NSMutableDictionary dictionary];
+	}
+	self.instanceBlocksStore[@(addr)][NSStringFromSelector(method)] = [block copy];
 }
 
 - (DLRetBlock)blockForClass:(Class)aClass method:(SEL)method {
 //@TODO: it's sure we should have some caching of selectors here
-	DLRetBlock result = self.blocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)];
+	DLRetBlock result = self.classBlocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)];
 	if (!result && [aClass superclass] != [NSObject class]) {
 		result = [self blockForClass:[aClass superclass] method:method];
 	}
 	return result;
 }
 
-
+- (DLRetBlock)blockForInstance:(id)instance method:(SEL)method {
+	NSInteger addr = (NSInteger)instance;
+	return self.instanceBlocksStore[@(addr)][NSStringFromSelector(method)];
+}
 
 @end
 
@@ -93,6 +111,18 @@
 	}
     free(methods);
 }
+
+- (void)complementMethod:(SEL)selector byCalling:(DLRetBlock)block {
+	[[Interceptor sharedInstance] storeBlock:block forInstance:self method:selector];
+	Method origMethod = class_getInstanceMethod([self class], selector);
+	IMP impl = class_getMethodImplementation([self class], selector);
+	class_addMethod([self class],
+					[NSObject patchedSelector:selector],
+					impl,
+					method_getTypeEncoding(origMethod));
+	method_setImplementation(origMethod,
+							 class_getMethodImplementation([self class], @selector(fakeSelector)));
+}
 #pragma mark - Override
 
 #pragma clang diagnostic push
@@ -104,7 +134,17 @@
 	if ([self respondsToSelector:modifiedSelector]) {
 		DLRetBlock block = [[Interceptor sharedInstance] blockForClass:[[anInvocation target] class]
 																 method:anInvocation.selector];
-		block(self);
+		if (block) {
+			block(self);
+		} else {
+			DLRetBlock block = [[Interceptor sharedInstance] blockForInstance:[anInvocation target]
+																	   method:anInvocation.selector];
+			if (block) {
+				block(self);
+			}
+		}
+		
+		
 		anInvocation.selector = modifiedSelector;
 		[anInvocation invokeWithTarget:self];
 	}
@@ -116,10 +156,7 @@
 
 + (SEL)patchedSelector:(SEL)selector {
 	NSString *strSelector = NSStringFromSelector(selector);
-	/*if ([[strSelector substringFromIndex:strSelector.length - 1] isEqualToString:@":"]) {
-		return NSSelectorFromString([NSString stringWithFormat:@"%@__:", [strSelector  substringToIndex:strSelector.length - 1]]);
-	}*/
-	return NSSelectorFromString([@"_" stringByAppendingString:strSelector]);
+	return NSSelectorFromString([@"__" stringByAppendingString:strSelector]);
 }
 
 @end

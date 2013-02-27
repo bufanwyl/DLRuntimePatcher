@@ -43,14 +43,22 @@
 	} includePrivate:NO];
 	
 	TestA * a = [[TestA alloc] init];
+	TestA * b = [[TestA alloc] init];
+
+	[a complementMethod:@selector(bar) byCalling:^(NSObject *callee) {
+		NSLog(@"Intercepted bar!");
+		
+	}];
 	
 	[TestA complementInstanceMethod:@selector(foo) byCalling:^(NSObject *obj){
 		NSLog(@"%@ concrete method intercepted %@", obj, NSStringFromSelector(@selector(foo)));
 	}];
 	
+	
 	[a foo];
-	[a foo];
+	[b foo];
 	[a bar];
+	[b bar];
 	
 	[self.window makeKeyAndVisible];
 

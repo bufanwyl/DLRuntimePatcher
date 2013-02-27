@@ -17,4 +17,7 @@ typedef void (^DLRetWithSelectorBlock)(NSObject *callee, SEL selector);
 + (void)listenToAllInstanceMethods:(DLRetWithSelectorBlock)block;
 + (void)listenToAllInstanceMethods:(DLRetWithSelectorBlock)block includePrivate:(BOOL)privateMethods;
 
+- (void)complementMethod:(SEL)selector byCalling:(DLRetBlock)block;
+
+
 @end
