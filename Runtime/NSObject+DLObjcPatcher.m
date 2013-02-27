@@ -67,8 +67,6 @@
 								  [NSObject patchedSelector:selector],
 								  impl,
 								  method_getTypeEncoding(origMethod));
-	NSAssert(result, @"Unable to add method");
-	
 	method_setImplementation(origMethod,
 							 class_getMethodImplementation([self class], @selector(fakeSelector)));	
 }
@@ -118,10 +116,10 @@
 
 + (SEL)patchedSelector:(SEL)selector {
 	NSString *strSelector = NSStringFromSelector(selector);
-	if ([[strSelector substringFromIndex:strSelector.length - 1] isEqualToString:@":"]) {
+	/*if ([[strSelector substringFromIndex:strSelector.length - 1] isEqualToString:@":"]) {
 		return NSSelectorFromString([NSString stringWithFormat:@"%@__:", [strSelector  substringToIndex:strSelector.length - 1]]);
-	}
-	return NSSelectorFromString([strSelector stringByAppendingString:@"__"]);
+	}*/
+	return NSSelectorFromString([@"_" stringByAppendingString:strSelector]);
 }
 
 @end

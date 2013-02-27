@@ -41,14 +41,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+	
+	[UIResponder listenToAllInstanceMethods:^(NSObject *obj, SEL selector) {
+		NSLog(@"%@ called: '%@'", obj, NSStringFromSelector(selector));
+	} includePrivate:NO];
+	
 	TestA * a = [[TestA alloc] init];
+	
 	[TestA complementInstanceMethod:@selector(foo) byCalling:^ (NSObject *obj){
-		NSLog(@"%@ Intercepted %@", obj, NSStringFromSelector(@selector(foo)));
+		NSLog(@"%@ concrete method intercepted %@", obj, NSStringFromSelector(@selector(foo)));
 	}];
 	
-	[UIView listenToAllInstanceMethods:^(NSObject *obj, SEL selector) {
-		NSLog(@"%@", NSStringFromSelector(selector));
-	} includePrivate:NO];
+
 	
 	[a foo];
 	[a foo];
