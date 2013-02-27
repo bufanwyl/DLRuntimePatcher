@@ -21,7 +21,7 @@
 		1D17C63C16D80F27003FBBF7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D17C61D16D80F27003FBBF7 /* Foundation.framework */; };
 		1D17C64416D80F27003FBBF7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D17C64216D80F27003FBBF7 /* InfoPlist.strings */; };
 		1D17C64716D80F27003FBBF7 /* RuntimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D17C64616D80F27003FBBF7 /* RuntimeTests.m */; };
-		1D33187B16DD217D0014AF23 /* NSObject+DLObjcPatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D33187A16DD217D0014AF23 /* NSObject+DLObjcPatcher.m */; };
+		1D38080B16DE5C82009C90B1 /* NSObject+DLObjcPatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D38080A16DE5C82009C90B1 /* NSObject+DLObjcPatcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,27 +35,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D17C61816D80F27003FBBF7 /* Runtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runtime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D17C61816D80F27003FBBF7 /* ObjCMethodPatching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjCMethodPatching.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D17C61B16D80F27003FBBF7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1D17C61D16D80F27003FBBF7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D17C61F16D80F27003FBBF7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1D17C62316D80F27003FBBF7 /* Runtime-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Runtime-Info.plist"; sourceTree = "<group>"; };
+		1D17C62316D80F27003FBBF7 /* ObjCMethodPatching-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ObjCMethodPatching-Info.plist"; sourceTree = "<group>"; };
 		1D17C62516D80F27003FBBF7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D17C62716D80F27003FBBF7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1D17C62916D80F27003FBBF7 /* Runtime-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runtime-Prefix.pch"; sourceTree = "<group>"; };
+		1D17C62916D80F27003FBBF7 /* ObjCMethodPatching-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjCMethodPatching-Prefix.pch"; sourceTree = "<group>"; };
 		1D17C62A16D80F27003FBBF7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D17C62B16D80F27003FBBF7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D17C62D16D80F27003FBBF7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		1D17C62F16D80F27003FBBF7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		1D17C63116D80F27003FBBF7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		1D17C63816D80F27003FBBF7 /* RuntimeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RuntimeTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D17C63816D80F27003FBBF7 /* ObjCMethodPatchingTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjCMethodPatchingTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D17C63916D80F27003FBBF7 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		1D17C64116D80F27003FBBF7 /* RuntimeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RuntimeTests-Info.plist"; sourceTree = "<group>"; };
+		1D17C64116D80F27003FBBF7 /* ObjCMethodPatchingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ObjCMethodPatchingTests-Info.plist"; sourceTree = "<group>"; };
 		1D17C64316D80F27003FBBF7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D17C64516D80F27003FBBF7 /* RuntimeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RuntimeTests.h; sourceTree = "<group>"; };
 		1D17C64616D80F27003FBBF7 /* RuntimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RuntimeTests.m; sourceTree = "<group>"; };
-		1D33187916DD217D0014AF23 /* NSObject+DLObjcPatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+DLObjcPatcher.h"; path = "Runtime/NSObject+DLObjcPatcher.h"; sourceTree = "<group>"; };
-		1D33187A16DD217D0014AF23 /* NSObject+DLObjcPatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+DLObjcPatcher.m"; path = "Runtime/NSObject+DLObjcPatcher.m"; sourceTree = "<group>"; };
+		1D38080916DE5C82009C90B1 /* NSObject+DLObjcPatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DLObjcPatcher.h"; sourceTree = "<group>"; };
+		1D38080A16DE5C82009C90B1 /* NSObject+DLObjcPatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DLObjcPatcher.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +85,7 @@
 		1D17C60F16D80F27003FBBF7 = {
 			isa = PBXGroup;
 			children = (
-				1D33187916DD217D0014AF23 /* NSObject+DLObjcPatcher.h */,
-				1D33187A16DD217D0014AF23 /* NSObject+DLObjcPatcher.m */,
+				1D38080816DE5C82009C90B1 /* Source */,
 				1D17C62116D80F27003FBBF7 /* Runtime */,
 				1D17C63F16D80F27003FBBF7 /* RuntimeTests */,
 				1D17C61A16D80F27003FBBF7 /* Frameworks */,
@@ -97,8 +96,8 @@
 		1D17C61916D80F27003FBBF7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D17C61816D80F27003FBBF7 /* Runtime.app */,
-				1D17C63816D80F27003FBBF7 /* RuntimeTests.octest */,
+				1D17C61816D80F27003FBBF7 /* ObjCMethodPatching.app */,
+				1D17C63816D80F27003FBBF7 /* ObjCMethodPatchingTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,10 +126,10 @@
 		1D17C62216D80F27003FBBF7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D17C62316D80F27003FBBF7 /* Runtime-Info.plist */,
+				1D17C62316D80F27003FBBF7 /* ObjCMethodPatching-Info.plist */,
 				1D17C62416D80F27003FBBF7 /* InfoPlist.strings */,
 				1D17C62716D80F27003FBBF7 /* main.m */,
-				1D17C62916D80F27003FBBF7 /* Runtime-Prefix.pch */,
+				1D17C62916D80F27003FBBF7 /* ObjCMethodPatching-Prefix.pch */,
 				1D17C62D16D80F27003FBBF7 /* Default.png */,
 				1D17C62F16D80F27003FBBF7 /* Default@2x.png */,
 				1D17C63116D80F27003FBBF7 /* Default-568h@2x.png */,
@@ -151,18 +150,28 @@
 		1D17C64016D80F27003FBBF7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1D17C64116D80F27003FBBF7 /* RuntimeTests-Info.plist */,
+				1D17C64116D80F27003FBBF7 /* ObjCMethodPatchingTests-Info.plist */,
 				1D17C64216D80F27003FBBF7 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1D38080816DE5C82009C90B1 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1D38080916DE5C82009C90B1 /* NSObject+DLObjcPatcher.h */,
+				1D38080A16DE5C82009C90B1 /* NSObject+DLObjcPatcher.m */,
+			);
+			name = Source;
+			path = Runtime/Source;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D17C61716D80F27003FBBF7 /* Runtime */ = {
+		1D17C61716D80F27003FBBF7 /* ObjCMethodPatching */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D17C64A16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "Runtime" */;
+			buildConfigurationList = 1D17C64A16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "ObjCMethodPatching" */;
 			buildPhases = (
 				1D17C61416D80F27003FBBF7 /* Sources */,
 				1D17C61516D80F27003FBBF7 /* Frameworks */,
@@ -172,14 +181,14 @@
 			);
 			dependencies = (
 			);
-			name = Runtime;
+			name = ObjCMethodPatching;
 			productName = Runtime;
-			productReference = 1D17C61816D80F27003FBBF7 /* Runtime.app */;
+			productReference = 1D17C61816D80F27003FBBF7 /* ObjCMethodPatching.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1D17C63716D80F27003FBBF7 /* RuntimeTests */ = {
+		1D17C63716D80F27003FBBF7 /* ObjCMethodPatchingTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D17C64D16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "RuntimeTests" */;
+			buildConfigurationList = 1D17C64D16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "ObjCMethodPatchingTests" */;
 			buildPhases = (
 				1D17C63316D80F27003FBBF7 /* Sources */,
 				1D17C63416D80F27003FBBF7 /* Frameworks */,
@@ -191,9 +200,9 @@
 			dependencies = (
 				1D17C63E16D80F27003FBBF7 /* PBXTargetDependency */,
 			);
-			name = RuntimeTests;
+			name = ObjCMethodPatchingTests;
 			productName = RuntimeTests;
-			productReference = 1D17C63816D80F27003FBBF7 /* RuntimeTests.octest */;
+			productReference = 1D17C63816D80F27003FBBF7 /* ObjCMethodPatchingTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -205,7 +214,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Denis Lebedev";
 			};
-			buildConfigurationList = 1D17C61316D80F27003FBBF7 /* Build configuration list for PBXProject "Runtime" */;
+			buildConfigurationList = 1D17C61316D80F27003FBBF7 /* Build configuration list for PBXProject "ObjCMethodPatching" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -217,8 +226,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D17C61716D80F27003FBBF7 /* Runtime */,
-				1D17C63716D80F27003FBBF7 /* RuntimeTests */,
+				1D17C61716D80F27003FBBF7 /* ObjCMethodPatching */,
+				1D17C63716D80F27003FBBF7 /* ObjCMethodPatchingTests */,
 			);
 		};
 /* End PBXProject section */
@@ -268,7 +277,7 @@
 			files = (
 				1D17C62816D80F27003FBBF7 /* main.m in Sources */,
 				1D17C62C16D80F27003FBBF7 /* AppDelegate.m in Sources */,
-				1D33187B16DD217D0014AF23 /* NSObject+DLObjcPatcher.m in Sources */,
+				1D38080B16DE5C82009C90B1 /* NSObject+DLObjcPatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +294,7 @@
 /* Begin PBXTargetDependency section */
 		1D17C63E16D80F27003FBBF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1D17C61716D80F27003FBBF7 /* Runtime */;
+			target = 1D17C61716D80F27003FBBF7 /* ObjCMethodPatching */;
 			targetProxy = 1D17C63D16D80F27003FBBF7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -370,9 +379,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Runtime/Runtime-Prefix.pch";
-				INFOPLIST_FILE = "Runtime/Runtime-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Runtime/ObjCMethodPatching-Prefix.pch";
+				INFOPLIST_FILE = "Runtime/ObjCMethodPatching-Info.plist";
+				PRODUCT_NAME = ObjCMethodPatching;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -381,9 +390,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Runtime/Runtime-Prefix.pch";
-				INFOPLIST_FILE = "Runtime/Runtime-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Runtime/ObjCMethodPatching-Prefix.pch";
+				INFOPLIST_FILE = "Runtime/ObjCMethodPatching-Info.plist";
+				PRODUCT_NAME = ObjCMethodPatching;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -398,8 +407,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Runtime/Runtime-Prefix.pch";
-				INFOPLIST_FILE = "RuntimeTests/RuntimeTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "RuntimeTests/ObjCMethodPatchingTests-Info.plist";
+				PRODUCT_NAME = ObjCMethodPatchingTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -415,8 +424,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Runtime/Runtime-Prefix.pch";
-				INFOPLIST_FILE = "RuntimeTests/RuntimeTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "RuntimeTests/ObjCMethodPatchingTests-Info.plist";
+				PRODUCT_NAME = ObjCMethodPatchingTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -425,7 +434,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D17C61316D80F27003FBBF7 /* Build configuration list for PBXProject "Runtime" */ = {
+		1D17C61316D80F27003FBBF7 /* Build configuration list for PBXProject "ObjCMethodPatching" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D17C64816D80F27003FBBF7 /* Debug */,
@@ -434,7 +443,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D17C64A16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "Runtime" */ = {
+		1D17C64A16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "ObjCMethodPatching" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D17C64B16D80F27003FBBF7 /* Debug */,
@@ -443,7 +452,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1D17C64D16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "RuntimeTests" */ = {
+		1D17C64D16D80F27003FBBF7 /* Build configuration list for PBXNativeTarget "ObjCMethodPatchingTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D17C64E16D80F27003FBBF7 /* Debug */,

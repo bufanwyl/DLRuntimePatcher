@@ -8,9 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import <objc/runtime.h>
-#import <objc/message.h>
-
 #import "NSObject+DLObjcPatcher.h"
 
 @interface TestA : NSObject

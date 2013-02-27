@@ -63,10 +63,10 @@
 	[[Interceptor sharedInstance] storeBlock:block forClass:self method:selector];
 	Method origMethod = class_getInstanceMethod([self class], selector);
 	IMP impl = class_getMethodImplementation([self class], selector);
-	BOOL result = class_addMethod([self class],
-								  [NSObject patchedSelector:selector],
-								  impl,
-								  method_getTypeEncoding(origMethod));
+	class_addMethod([self class],
+					[NSObject patchedSelector:selector],
+					impl,
+					method_getTypeEncoding(origMethod));
 	method_setImplementation(origMethod,
 							 class_getMethodImplementation([self class], @selector(fakeSelector)));	
 }
