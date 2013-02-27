@@ -15,5 +15,6 @@ typedef void (^DLSelectorBlock)(SEL selector);
 
 + (void)complementInstanceMethod:(SEL)selector byCalling:(DLVoidBlock)block;
 + (void)listenToAllInstanceMethods:(DLSelectorBlock)block;
++ (void)listenToAllInstanceMethods:(DLSelectorBlock)block includePrivate:(BOOL)privateMethods;
 
 @end

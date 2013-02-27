@@ -48,6 +48,10 @@
 		NSLog(@"Imtercepted %@", NSStringFromSelector(@selector(foo)));
 	}];
 	
+	[UIResponder listenToAllInstanceMethods:^(SEL selector) {
+		NSLog(@"%@", NSStringFromSelector(selector));
+	} includePrivate:NO];
+	
 	[a foo];
 	[a foo];
 	[a bar];

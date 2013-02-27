@@ -25,6 +25,15 @@
 
 @implementation Interceptor
 
++ (instancetype)sharedInstance {
+    static id sharedInstance = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (void)storeBlock:(DLVoidBlock)block forClass:(Class)aClass method:(SEL)method {
 	if (!_blocksStore) {
 		_blocksStore = [NSMutableDictionary dictionary];
@@ -44,23 +53,7 @@
 	return result;
 }
 
-+ (instancetype)sharedInstance {
-    static id sharedInstance = nil;
-    static dispatch_once_t onceToken = 0;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
 
-@end
-
-@interface MySuper : NSObject
-
-
-@end
-
-@implementation MySuper
 
 @end
 
@@ -81,12 +74,17 @@
 }
 
 + (void)listenToAllInstanceMethods:(DLSelectorBlock)block {
+	[self listenToAllInstanceMethods:block includePrivate:YES];
+}
+
++ (void)listenToAllInstanceMethods:(DLSelectorBlock)block includePrivate:(BOOL)privateMethods {
 	unsigned int outCount;
     Method *methods = class_copyMethodList(self, &outCount);
     for (int i = 0; i < outCount; i++) {
 		SEL sel = method_getName(methods[i]);
 		if (sel_isEqual(sel, NSSelectorFromString(@"retain")) ||
-			sel_isEqual(sel, NSSelectorFromString(@"release"))) {
+			sel_isEqual(sel, NSSelectorFromString(@"release")) ||
+			(sel_getName(sel)[0] == '_' && !privateMethods)) { //skip apple 'private' methods
 			continue;
 			//@TODO: we don't need exactly all methods here (f.e. starting with dot)
 		}
@@ -97,7 +95,6 @@
 	}
     free(methods);
 }
-
 #pragma mark - Override
 
 #pragma clang diagnostic push
