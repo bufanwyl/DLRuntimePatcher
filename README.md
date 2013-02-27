@@ -22,8 +22,21 @@ The block will be called if any of UIResponder's methods is invoked.
 Add additional behaviour to specific method:
 ``` objective-c
   [TestA complementInstanceMethod:@selector(foo) byCalling:^(NSObject *obj){
-		NSLog(@"%@ concrete method intercepted %@", obj, NSStringFromSelector(@selector(foo)));
-	}];
+    NSLog(@"%@ concrete method intercepted %@", obj, NSStringFromSelector(@selector(foo)));
+  }];
+```
+
+Add additional block call to the method of particular instance:
+``` objective-c
+  TestA * a = [[TestA alloc] init];
+  TestA * b = [[TestA alloc] init];
+
+  [a complementMethod:@selector(bar) byCalling:^(NSObject *callee) {
+    NSLog(@"Intercepted bar!");	
+  }];
+  
+  [a bar]; //block is invoked
+  [b bar]; //block is not invoked
 ```
 
 ## TODO
