@@ -42,21 +42,17 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
 	TestA * a = [[TestA alloc] init];
-	//[a replaceMethod:@selector(foo) withBlock:^ { NSLog(@"%@", @"custom foo"); }];
-	//[a replaceMethod:@selector(bar) withBlock:^ { NSLog(@"%@", @"custom bar"); }];
-	[TestA complementInstanceMethod:@selector(foo) byCalling:^{
-		NSLog(@"Imtercepted %@", NSStringFromSelector(@selector(foo)));
+	[TestA complementInstanceMethod:@selector(foo) byCalling:^ (NSObject *obj){
+		NSLog(@"%@ Intercepted %@", obj, NSStringFromSelector(@selector(foo)));
 	}];
 	
-	[UIResponder listenToAllInstanceMethods:^(SEL selector) {
+	[UIView listenToAllInstanceMethods:^(NSObject *obj, SEL selector) {
 		NSLog(@"%@", NSStringFromSelector(selector));
 	} includePrivate:NO];
 	
 	[a foo];
 	[a foo];
 	[a bar];
-	//NSLog(@"%@", str);
-	//NSLog(@"%@", [@"52523" description]);
 	
 	[self.window makeKeyAndVisible];
 

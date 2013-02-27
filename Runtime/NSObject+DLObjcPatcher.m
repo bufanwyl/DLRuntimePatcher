@@ -17,8 +17,8 @@
 
 + (instancetype)sharedInstance;
 
-- (void)storeBlock:(DLVoidBlock)block forClass:(Class)aClass method:(SEL)method;
-- (DLVoidBlock)blockForClass:(Class)aClass method:(SEL)method;
+- (void)storeBlock:(DLRetBlock)block forClass:(Class)aClass method:(SEL)method;
+- (DLRetBlock)blockForClass:(Class)aClass method:(SEL)method;
 
 @end
 
@@ -34,7 +34,7 @@
     return sharedInstance;
 }
 
-- (void)storeBlock:(DLVoidBlock)block forClass:(Class)aClass method:(SEL)method {
+- (void)storeBlock:(DLRetBlock)block forClass:(Class)aClass method:(SEL)method {
 	if (!_blocksStore) {
 		_blocksStore = [NSMutableDictionary dictionary];
 	}
@@ -44,9 +44,9 @@
 	self.blocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)] = [block copy];
 }
 
-- (DLVoidBlock)blockForClass:(Class)aClass method:(SEL)method {
+- (DLRetBlock)blockForClass:(Class)aClass method:(SEL)method {
 //@TODO: it's sure we should have some caching of selectors here
-	DLVoidBlock result = self.blocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)];
+	DLRetBlock result = self.blocksStore[NSStringFromClass(aClass)][NSStringFromSelector(method)];
 	if (!result && [aClass superclass] != [NSObject class]) {
 		result = [self blockForClass:[aClass superclass] method:method];
 	}
@@ -59,12 +59,12 @@
 
 @implementation NSObject (DLObjcPatcher)
 
-+ (void)complementInstanceMethod:(SEL)selector byCalling:(DLVoidBlock)block {
++ (void)complementInstanceMethod:(SEL)selector byCalling:(DLRetBlock)block {
 	[[Interceptor sharedInstance] storeBlock:block forClass:self method:selector];
 	Method origMethod = class_getInstanceMethod([self class], selector);
 	IMP impl = class_getMethodImplementation([self class], selector);
 	BOOL result = class_addMethod([self class],
-								  [NSObject pathchedSelector:selector],
+								  [NSObject patchedSelector:selector],
 								  impl,
 								  method_getTypeEncoding(origMethod));
 	NSAssert(result, @"Unable to add method");
@@ -73,11 +73,11 @@
 							 class_getMethodImplementation([self class], @selector(fakeSelector)));	
 }
 
-+ (void)listenToAllInstanceMethods:(DLSelectorBlock)block {
++ (void)listenToAllInstanceMethods:(DLRetWithSelectorBlock)block {
 	[self listenToAllInstanceMethods:block includePrivate:YES];
 }
 
-+ (void)listenToAllInstanceMethods:(DLSelectorBlock)block includePrivate:(BOOL)privateMethods {
++ (void)listenToAllInstanceMethods:(DLRetWithSelectorBlock)block includePrivate:(BOOL)privateMethods {
 	unsigned int outCount;
     Method *methods = class_copyMethodList(self, &outCount);
     for (int i = 0; i < outCount; i++) {
@@ -88,9 +88,9 @@
 			continue;
 			//@TODO: we don't need exactly all methods here (f.e. starting with dot)
 		}
-		[self complementInstanceMethod:sel byCalling:^{
+		[self complementInstanceMethod:sel byCalling:^ (NSObject *callee){
 			//TODO: maybe we should add more interesting info here (passed args)
-			block(sel);
+			block(callee, sel);
 		}];
 	}
     free(methods);
@@ -102,11 +102,11 @@
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
 	 
-	SEL modifiedSelector = [NSObject pathchedSelector:anInvocation.selector];
+	SEL modifiedSelector = [NSObject patchedSelector:anInvocation.selector];
 	if ([self respondsToSelector:modifiedSelector]) {
-		DLVoidBlock block = [[Interceptor sharedInstance] blockForClass:[[anInvocation target] class]
+		DLRetBlock block = [[Interceptor sharedInstance] blockForClass:[[anInvocation target] class]
 																 method:anInvocation.selector];
-		block(); //@TODO: pass some args here, f.e.
+		block(self);
 		anInvocation.selector = modifiedSelector;
 		[anInvocation invokeWithTarget:self];
 	}
@@ -116,7 +116,7 @@
 
 #pragma mark - Private
 
-+ (SEL)pathchedSelector:(SEL)selector {
++ (SEL)patchedSelector:(SEL)selector {
 	NSString *strSelector = NSStringFromSelector(selector);
 	if ([[strSelector substringFromIndex:strSelector.length - 1] isEqualToString:@":"]) {
 		return NSSelectorFromString([NSString stringWithFormat:@"%@__:", [strSelector  substringToIndex:strSelector.length - 1]]);

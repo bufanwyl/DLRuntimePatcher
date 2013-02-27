@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DLVoidBlock)(void);
-typedef void (^DLSelectorBlock)(SEL selector);
+typedef void (^DLRetBlock)(NSObject *callee);
+typedef void (^DLRetWithSelectorBlock)(NSObject *callee, SEL selector);
 
 @interface NSObject (DLObjcPatcher)
 
-+ (void)complementInstanceMethod:(SEL)selector byCalling:(DLVoidBlock)block;
-+ (void)listenToAllInstanceMethods:(DLSelectorBlock)block;
-+ (void)listenToAllInstanceMethods:(DLSelectorBlock)block includePrivate:(BOOL)privateMethods;
++ (void)complementInstanceMethod:(SEL)selector byCalling:(DLRetBlock)block;
++ (void)listenToAllInstanceMethods:(DLRetWithSelectorBlock)block;
++ (void)listenToAllInstanceMethods:(DLRetWithSelectorBlock)block includePrivate:(BOOL)privateMethods;
 
 @end
